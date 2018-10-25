@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{21C23360-D9F7-4988-9388-9EF4701B4A62}</ProjectGuid>
+    <ProjectGuid>{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KriptoProje</RootNamespace>

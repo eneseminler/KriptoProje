@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KriptoProje", "KriptoProje\KriptoProje.csproj", "{21C23360-D9F7-4988-9388-9EF4701B4A62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KriptoProje", "KriptoProje\KriptoProje.csproj", "{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21C23360-D9F7-4988-9388-9EF4701B4A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21C23360-D9F7-4988-9388-9EF4701B4A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21C23360-D9F7-4988-9388-9EF4701B4A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21C23360-D9F7-4988-9388-9EF4701B4A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F2FD0A0-B24F-494A-A03C-C8B1E9D4AD79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
