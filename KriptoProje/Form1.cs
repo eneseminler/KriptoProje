@@ -15,6 +15,7 @@ namespace KriptoProje
     public partial class Form1 : Form
     {
         private string hash = "eneseminler";
+       
         private byte[] Data = Encoding.UTF8.GetBytes("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         private byte[] A = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
         private byte[] B = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
@@ -35,15 +36,14 @@ namespace KriptoProje
         {
             byte[] ta = Encoding.UTF8.GetBytes(textBox1.Text);
             int taUzunluk = ta.Length;
-
-            for (int i = 0; i < taUzunluk; i++)
-            {
-                Data[i] = ta[i];
-            }
            
+                for (int i = 0; i < taUzunluk; i++)
+                {
+                    Data[i] = ta[i];
+                }
+            
 
             Bol();
-           
             for (int i = 0; i < 16; i++)
             {
                 Ffonk();
@@ -65,16 +65,18 @@ namespace KriptoProje
             for (int i = 0; i < 16; i++)
             {
                 Hfonk();
-                Ifonk();
+                Afonk();
                 Degistir();
             }
             Birlestir();
 
+            Duzelt();
 
             textBox3.Text = System.Text.Encoding.UTF8.GetString(Data);
-            
             textBox2.Text = Convert.ToString(Data[0]);
+
             //textBox3.Text = Convert.ToString(Data[105]);
+
             string dosya_yolu = @"D:\metin.txt";
             //İşlem yapacağımız dosyanın yolunu belirtiyoruz.
             FileStream fs = new FileStream(dosya_yolu, FileMode.OpenOrCreate, FileAccess.Write);
@@ -83,10 +85,12 @@ namespace KriptoProje
             //3.parametre dosyaya erişimin veri yazmak için olacağını gösterir.
             StreamWriter sw = new StreamWriter(fs);
             //Yazma işlemi için bir StreamWriter nesnesi oluşturduk.
+            sw.WriteLine(System.Text.Encoding.UTF8.GetString(Data));
             for (int i = 0; i < 128; i++)
             {
                 sw.WriteLine(Data[i]);
             }
+            
             
            
             //Dosyaya ekleyeceğimiz iki satırlık yazıyı WriteLine() metodu ile yazacağız.
@@ -114,13 +118,14 @@ namespace KriptoProje
             {
                 int a = A[i] ^ F4[i];
                 A1[i] = Convert.ToByte(a);
-                int c = ~A1[i];
+
+                int c = A1[i] << 1;
                 if (c > 128)
                 {
-                    c = c - 127;
+                    c = c - 128;
                 }
                 A2[i] = (byte)c;
-                int b = A2[i] ^ B[i];
+                int b = A1[i] ^ A2[i];
                 A3[i] = Convert.ToByte(b);
             }
         }
@@ -134,7 +139,7 @@ namespace KriptoProje
                 int b = ~B[i];
                 if (b > 128)
                 {
-                    b = b - 127;
+                    b = b - 128;
                 }
                 F2[i] = (byte)b;
 
@@ -155,9 +160,9 @@ namespace KriptoProje
                 int b = ~D[i];
                 if (b > 128)
                 {
-                    b = b - 127;
+                    b = b - 128;
                 }
-                F2[i] = (byte)~b;
+                F2[i] = (byte)b;
 
                 int c = F2[i] & C[i];
                 F3[i] = Convert.ToByte(c);
@@ -187,7 +192,7 @@ namespace KriptoProje
                 int c = ~D[i];
                 if (c > 128)
                 {
-                    c = c - 127;
+                    c = c - 128;
                 }
                 F1[i] = (byte)c;
 
@@ -228,7 +233,39 @@ namespace KriptoProje
 
             }
         }
-
+        private void Duzelt()
+        {
+            int a = 0;
+            int b = 0;
+            int c = 129;
+            int d = 80;
+            int e = 32;
+            for (int i = 0; i < 128; i++)
+            {
+                if (Data[i] > 200)
+                {
+                    a = (int)Data[i];
+                    b = a - c;
+                    Data[i] = (byte)b;
+                }
+                else if (Data[i] > 126 && Data[i] <= 200)
+                {
+                    a = (int)Data[i];
+                    b = a - d;
+                    Data[i] = (byte)b;
+                }
+                else if (Data[i] >= 0 && Data[i] <= 32)
+                {
+                    a = (int)Data[i];
+                    b = a + d;
+                    Data[i] = (byte)b;
+                }
+                else
+                {
+                    Data[i] = Data[i];
+                }
+            }
+        }
 
 
 
@@ -238,10 +275,6 @@ namespace KriptoProje
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            byte[] data = Convert.FromBase64String(textBox2.Text);
-           
-        }
+      
     }
 }
