@@ -14,7 +14,6 @@ namespace KriptoProje
 {
     public partial class Form1 : Form
     {
-        private string hash = "eneseminler";
        
         private byte[] Data = Encoding.UTF8.GetBytes("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         private byte[] A = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
@@ -28,6 +27,10 @@ namespace KriptoProje
         private byte[] A1 = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
         private byte[] A2 = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
         private byte[] A3 = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
+        private byte[] A4 = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
+        private byte[] A5 = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
+        private byte[] hash = Encoding.UTF8.GetBytes("kdgqrwtyxmojasfg");
+
         public Form1()
         {
             InitializeComponent();
@@ -114,19 +117,30 @@ namespace KriptoProje
         }
         private void Afonk()
         {
+            int a, b, c, d, e, f;
             for (int i = 0; i < 32; i++)
             {
-                int a = A[i] ^ F4[i];
+                 a = A[i] ^ F4[i];
                 A1[i] = Convert.ToByte(a);
 
-                int c = A1[i] << 1;
-                if (c > 128)
+                 b = ((i * 11) + a) % 16;
+                A2[i] = Data[b];
+                
+                a = A1[i] ^ A2[i];
+                A2[i] = Convert.ToByte(a);
+
+                 c = ((i * 7) + b) % 16;
+                 d = A2[i] ^ hash[c];
+                A5[i] = Convert.ToByte(d);
+
+                 e = A5[i] << 1;
+                if (e > 128)
                 {
-                    c = c - 128;
+                    e = e - 128;
                 }
-                A2[i] = (byte)c;
-                int b = A1[i] ^ A2[i];
-                A3[i] = Convert.ToByte(b);
+                A4[i] = (byte)e;
+                 f = A4[i] ^ B[i];
+                A3[i] = Convert.ToByte(f);
             }
         }
         private void Ffonk()
