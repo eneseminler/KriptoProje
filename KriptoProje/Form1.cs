@@ -14,8 +14,10 @@ namespace KriptoProje
 {
     public partial class Form1 : Form
     {
-       
-        private byte[] Data = Encoding.UTF8.GetBytes("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+       //Şifreleme boyunca kullanılmak üzere 128 bitlik şifrelenmiş metin, 32 bitlik A,B,C,D matrisleri
+       //F fonksiyonunda kullanılacak 4 matris
+       //Ana işlemde kullanılacak A1,A2 adlı matrisler oluşturulmuştur.
+        private byte[] Data = Encoding.UTF8.GetBytes("00000000000000000000000000000100010000000010000001000001000000010000000001000000011000100000010000010000001100000000101000000010");
         private byte[] A = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
         private byte[] B = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
         private byte[] C = Encoding.UTF8.GetBytes("00000000000000000000000000000000");
@@ -37,70 +39,85 @@ namespace KriptoProje
         }
         private void Main()
         {
-            byte[] ta = Encoding.UTF8.GetBytes(textBox1.Text);
-            int taUzunluk = ta.Length;
-           
-                for (int i = 0; i < taUzunluk; i++)
-                {
-                    Data[i] = ta[i];
-                }
-            
 
+            //Şifrelenecek metin ve Hash textboxlardan alınıyor.
+            byte[] SifrelenecekMetin = Encoding.UTF8.GetBytes(textBox1.Text);
+            byte[] HashMetin = Encoding.UTF8.GetBytes(textBox2.Text);
+            int SifrelenecekUzunluk = SifrelenecekMetin.Length;
+            int HashUzunluk = HashMetin.Length;
+
+            //Şifrelenecek metin 128 bitlik veri haline getiriliyor.
+            for (int i = 0; i < SifrelenecekUzunluk; i++)
+            {
+                Data[i] = SifrelenecekMetin[i];
+            }
+            for (int i = 0; i < HashUzunluk; i++)
+            {
+                hash[i] = HashMetin[i];
+            }
+            
+            //128 bitlik veri 32-32 4-e bölünüyor.
             Bol();
-            for (int i = 0; i < 16; i++)
-            {
-                Ffonk();
-                Afonk();
-                Degistir();
-            }
-            for (int i = 0; i < 16; i++)
-            {
-                Gfonk();
-                Afonk();
-                Degistir();
-            }
-            for (int i = 0; i < 16; i++)
-            {
-                Hfonk();
-                Afonk();
-                Degistir();
-            }
-            for (int i = 0; i < 16; i++)
-            {
-                Hfonk();
-                Afonk();
-                Degistir();
-            }
-            Birlestir();
 
-            Duzelt();
 
+            //16 şar kez 4 parçada şifreleme işlemi yapılıyor. Her 16'lık parçada F fonksiyonu değişime uğruyor.
+            for (int i = 0; i < 16; i++)
+            {
+                Ffonk();    //F fonksiyonunda gerekli işlemler yapılyor
+                Afonk();    //Ana fonksiyon çalışıyor
+                Degistir(); //A B C D Fonksiyonları yerlerini değiştiriyor
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                Gfonk();    //G fonksiyonunda gerekli işlemler yapılyor
+                Afonk();    //Ana fonksiyon çalışıyor
+                Degistir(); //A B C D Fonksiyonları yerlerini değiştiriyor
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                Hfonk();    //H fonksiyonunda gerekli işlemler yapılyor
+                Afonk();    //Ana fonksiyon çalışıyor
+                Degistir(); //A B C D Fonksiyonları yerlerini değiştiriyor
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                Ifonk();    //G fonksiyonunda gerekli işlemler yapılyor
+                Afonk();    //Ana fonksiyon çalışıyor
+                Degistir(); //A B C D Fonksiyonları yerlerini değiştiriyor
+            }
+
+            Birlestir();    //32 Bitlik böldüğümüz veriyi 128 bit haline getiriyoruz
+            Duzelt();       //Karakterleri anlamlı hale getirmek için aralık dışındaki unicode değerleriyle oynuyoruz
+
+            //Şifrelenmiş metini yazdırıyoruz.
             textBox3.Text = System.Text.Encoding.UTF8.GetString(Data);
-            textBox2.Text = Convert.ToString(Data[0]);
+            
 
-            //textBox3.Text = Convert.ToString(Data[105]);
+            ////Şifrelenmiş metin dilendiği taktirde dosyaya yazılabilir.
+            //string dosya_yolu = @"D:\metin.txt";
+            ////İşlem yapacağımız dosyanın yolunu belirtiyoruz.
+            //FileStream fs = new FileStream(dosya_yolu, FileMode.OpenOrCreate, FileAccess.Write);
+            ////Bir file stream nesnesi oluşturuyoruz. 1.parametre dosya yolunu,
+            ////2.parametre dosya varsa açılacağını yoksa oluşturulacağını belirtir,
+            ////3.parametre dosyaya erişimin veri yazmak için olacağını gösterir.
+            //StreamWriter sw = new StreamWriter(fs);
+            ////Yazma işlemi için bir StreamWriter nesnesi oluşturduk.
+            ////Şifrelenmiş metin yazılıyor
+            //sw.WriteLine(System.Text.Encoding.UTF8.GetString(Data));
 
-            string dosya_yolu = @"D:\metin.txt";
-            //İşlem yapacağımız dosyanın yolunu belirtiyoruz.
-            FileStream fs = new FileStream(dosya_yolu, FileMode.OpenOrCreate, FileAccess.Write);
-            //Bir file stream nesnesi oluşturuyoruz. 1.parametre dosya yolunu,
-            //2.parametre dosya varsa açılacağını yoksa oluşturulacağını belirtir,
-            //3.parametre dosyaya erişimin veri yazmak için olacağını gösterir.
-            StreamWriter sw = new StreamWriter(fs);
-            //Yazma işlemi için bir StreamWriter nesnesi oluşturduk.
-            sw.WriteLine(System.Text.Encoding.UTF8.GetString(Data));
-            for (int i = 0; i < 128; i++)
-            {
-                sw.WriteLine(Data[i]);
-            }
+            ////Şifrelenmiş metinin her bir karakterinin Unicode değerleri yazılıyor
+            //for (int i = 0; i < 128; i++)
+            //{
+            //    sw.Write(Data[i] + " - ");
+            //}
             
             
            
-            //Dosyaya ekleyeceğimiz iki satırlık yazıyı WriteLine() metodu ile yazacağız.
-            sw.Flush();
-            //Veriyi tampon bölgeden dosyaya aktardık.
-            sw.Close();
-            fs.Close();
+            ////Dosyaya ekleyeceğimiz iki satırlık yazıyı WriteLine() metodu ile yazacağız.
+            //sw.Flush();
+            ////Veriyi tampon bölgeden dosyaya aktardık.
+            //sw.Close();
+            //fs.Close();
 
 
 
@@ -123,10 +140,10 @@ namespace KriptoProje
                  a = A[i] ^ F4[i];
                 A1[i] = Convert.ToByte(a);
 
-                 b = ((i * 11) + a) % 16;
+                 b = ((i * 11) + (a * hash[i/2])) % 16;
                 A2[i] = Data[b];
                 
-                a = A1[i] ^ A2[i];
+                a = A1[i] ^ (A2[i]);
                 A2[i] = Convert.ToByte(a);
 
                  c = ((i * 7) + b) % 16;

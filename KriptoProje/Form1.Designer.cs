@@ -53,16 +53,18 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(140, 88);
+            this.textBox3.Location = new System.Drawing.Point(12, 175);
+            this.textBox3.MinimumSize = new System.Drawing.Size(300, 40);
+            this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(181, 20);
+            this.textBox3.Size = new System.Drawing.Size(309, 60);
             this.textBox3.TabIndex = 2;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(40, 139);
+            this.button1.Location = new System.Drawing.Point(18, 93);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(303, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "Şifrele";
             this.button1.UseVisualStyleBackColor = true;
@@ -87,18 +89,18 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 20);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Şifrelenmiş Metin";
+            this.label2.Text = "Hash Değeri";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label3.Location = new System.Drawing.Point(15, 88);
+            this.label3.Location = new System.Drawing.Point(118, 130);
             this.label3.MinimumSize = new System.Drawing.Size(50, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 20);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Çözülmüş Metin";
+            this.label3.Text = "Şifrelenmiş Metin";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
